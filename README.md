@@ -1,3 +1,3 @@
 # compareVariablesDemo
 
-R Application running with OpenCPU 
+R Application running with OpenCPU under VUE.js framework.
