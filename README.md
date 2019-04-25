@@ -10,3 +10,6 @@ ocpu_start_app("JeanEudesH/demoVueJS")
 #or
 ocpu_start_app("compareVariableDemoVue")
 ```
+And finally open the following link in your browser :
+
+http://localhost:5656/ocpu/library/compareVariableDemoVue/www/indexVue.html
