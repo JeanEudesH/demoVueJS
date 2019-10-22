@@ -11,7 +11,6 @@
 #' @description get the dataset of incertitudes for the data selected
 #'
 #' @param varURI uri of the variable to plot, from the \code{\link{variableList}} function or the web service directly
-#' @param token a token from \code{\link{getToken}} function
 #' @param smoothing logical, smoothing of the data,  returns the incertitudes from the smoothing
 #' @param sensor character, uri of a sensor to filter with
 #' @param endDate date, date from which to filter data, format "\%Y-\%m-\%dT\%H:\%M:\%S"
@@ -24,25 +23,23 @@
 #'
 #' @examples
 #' \donttest{
-#' initializeClientConnection(apiID="ws_private", url = "www.opensilex.org/openSilexAPI/rest/")
-#' aToken <- getToken("guest@opensilex.org","guest")
-#' token <- aToken$data
-#' vars <- variableList(token = token, wsUrl = "www.opensilex.org/openSilexAPI/rest/")
+#' connectToPHISWS(apiID="ws_private", url = "www.opensilex.org/openSilexAPI/rest/", "guest@opensilex.org","guest")
+#' vars <- variableList(wsUrl = "www.opensilex.org/openSilexAPI/rest/")
 #' vars
-#' getDF(token = token, varURI = list("http://www.opensilex.org/demo/id/variables/v004",
-#'                                          "http://www.opensilex.org/demo/id/variables/v007"))
+#' getDF(varURI = list("http://www.opensilex.org/demo/id/variables/v004",
+#'                            "http://www.opensilex.org/demo/id/variables/v007"))
 #' }
-getDF <- function(varURI, token, smoothing = FALSE, sensor = NULL, endDate = NULL, startDate = NULL, wsUrl = "www.opensilex.org/openSilexAPI/rest/"){
+getDF <- function(varURI, smoothing = FALSE, sensor = NULL, endDate = NULL, startDate = NULL, wsUrl = "www.opensilex.org/openSilexAPI/rest/"){
 
-  phisWSClientR::initializeClientConnection(apiID="ws_private", url = wsUrl)
+  phisWSClientR::connectToPHISWS(apiID="ws_private", url = wsUrl, "guest@opensilex.org","guest")
   ## Data recuperation
   # Variable's information
-  variableList <- variableList(token = token, wsUrl = wsUrl)
+  variableList <- variableList(wsUrl = wsUrl)
   variableList <- variableList[ variableList$uri %in% varURI, ]
 
   # Data
   Data = lapply(varURI, FUN = function(uri){
-    enviroData <- getDataVar(varURI = uri, variableList = variableList, token = token)$enviroData
+    enviroData <- getDataVar(varURI = uri, variableList = variableList)$enviroData
     yVar <- enviroData$value
     # Casting Date in the right format
     xVar <- as.POSIXct(enviroData$date, tz = "UTC", format = "%Y-%m-%dT%H:%M:%S")

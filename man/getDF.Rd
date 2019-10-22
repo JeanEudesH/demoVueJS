@@ -4,14 +4,11 @@
 \alias{getDF}
 \title{getDF}
 \usage{
-getDF(varURI, token, smoothing = FALSE, sensor = NULL,
-  endDate = NULL, startDate = NULL,
-  wsUrl = "www.opensilex.org/openSilexAPI/rest/")
+getDF(varURI, smoothing = FALSE, sensor = NULL, endDate = NULL,
+  startDate = NULL, wsUrl = "www.opensilex.org/openSilexAPI/rest/")
 }
 \arguments{
 \item{varURI}{uri of the variable to plot, from the \code{\link{variableList}} function or the web service directly}
-
-\item{token}{a token from \code{\link{getToken}} function}
 
 \item{smoothing}{logical, smoothing of the data,  returns the incertitudes from the smoothing}
 
@@ -31,12 +28,10 @@ get the dataset of incertitudes for the data selected
 }
 \examples{
 \donttest{
-initializeClientConnection(apiID="ws_private", url = "www.opensilex.org/openSilexAPI/rest/")
-aToken <- getToken("guest@opensilex.org","guest")
-token <- aToken$data
-vars <- variableList(token = token, wsUrl = "www.opensilex.org/openSilexAPI/rest/")
+connectToPHISWS(apiID="ws_private", url = "www.opensilex.org/openSilexAPI/rest/", "guest@opensilex.org","guest")
+vars <- variableList(wsUrl = "www.opensilex.org/openSilexAPI/rest/")
 vars
-getDF(token = token, varURI = list("http://www.opensilex.org/demo/id/variables/v004",
-                                         "http://www.opensilex.org/demo/id/variables/v007"))
+getDF(varURI = list("http://www.opensilex.org/demo/id/variables/v004",
+                           "http://www.opensilex.org/demo/id/variables/v007"))
 }
 }

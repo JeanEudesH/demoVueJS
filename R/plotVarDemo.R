@@ -14,30 +14,30 @@
 #' @importFrom plotly add_trace
 #'
 #' @param varURI uri of the variable to plot from the \code{\link{variableList}} function or the web service directly
-#' @param token a token from \code{\link{getToken}} function
 #' @param wsUrl url of the webservice
 
 #' @examples
 #' \donttest{
-#'  initializeClientConnection(apiID="ws_private", url = "www.opensilex.org/openSilexAPI/rest/")
-#'  aToken <- getToken("guest@opensilex.org","guest")
-#'  token <- aToken$data
-#'  vars <- variableList(token = token)
+#'  connectToPHISWS(apiID="ws_private", 
+#'      url = "www.opensilex.org/openSilexAPI/rest/", 
+#'      "guest@opensilex.org",
+#'      "guest")
+#'  vars <- variableList()
 #'  vars
-#'  plotVar(vars$value[1], token = token)
+#'  plotVar(vars$value[1])
 #' }
 #'
 #' @export
 
-plotVarDemo <- function(varURI, token, wsUrl = "www.opensilex.org/openSilexAPI/rest/"){
-  phisWSClientR::initializeClientConnection(apiID="ws_private", url = wsUrl)
+plotVarDemo <- function(varURI, wsUrl = "www.opensilex.org/openSilexAPI/rest/"){
+  phisWSClientR::connectToPHISWS(apiID="ws_private", url = wsUrl, "guest@opensilex.org","guest")
 
   ### Collecting Data
-  variableList <- variableList(token = token, wsUrl = wsUrl)
+  variableList <- variableList(wsUrl = wsUrl)
   ## Data
   Data <- list()
   Data = lapply(varURI,FUN = function(uri){
-    enviroData <- getDataVar(varURI = uri, variableList = variableList, token = token)$enviroData
+    enviroData <- getDataVar(varURI = uri, variableList = variableList)$enviroData
     yVar <- enviroData$value
     # Casting Date in the right format
     xVar <- as.POSIXct(enviroData$date, tz = "UTC", format = "%Y-%m-%dT%H:%M:%S")

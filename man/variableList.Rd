@@ -4,11 +4,9 @@
 \alias{variableList}
 \title{Get Variable's Names from WS2 and formate them}
 \usage{
-variableList(token, wsUrl = "www.opensilex.org/openSilexAPI/rest/")
+variableList(wsUrl = "www.opensilex.org/openSilexAPI/rest/")
 }
 \arguments{
-\item{token}{a token from \code{\link{getToken}} function}
-
 \item{wsUrl}{url of the webservice}
 }
 \value{
@@ -19,9 +17,10 @@ Get Variable's Names from WS2 and formate them
 }
 \examples{
 \donttest{
-initializeClientConnection(apiID="ws_private", url = "www.opensilex.org/openSilexAPI/rest/")
- aToken <- getToken("guest@opensilex.org","guest")
- token <- aToken$data
- variableList(token = token)
+connectToPHISWS(apiID="ws_private",
+url = "www.opensilex.org/openSilexAPI/rest/",
+"guest@opensilex.org",
+"guest")
+ variableList()
 }
 }

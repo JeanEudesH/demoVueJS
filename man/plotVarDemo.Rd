@@ -4,13 +4,10 @@
 \alias{plotVarDemo}
 \title{Plot Environmental Data}
 \usage{
-plotVarDemo(varURI, token,
-  wsUrl = "www.opensilex.org/openSilexAPI/rest/")
+plotVarDemo(varURI, wsUrl = "www.opensilex.org/openSilexAPI/rest/")
 }
 \arguments{
 \item{varURI}{uri of the variable to plot from the \code{\link{variableList}} function or the web service directly}
-
-\item{token}{a token from \code{\link{getToken}} function}
 
 \item{wsUrl}{url of the webservice}
 }
@@ -19,12 +16,13 @@ Demonstration function
 }
 \examples{
 \donttest{
- initializeClientConnection(apiID="ws_private", url = "www.opensilex.org/openSilexAPI/rest/")
- aToken <- getToken("guest@opensilex.org","guest")
- token <- aToken$data
- vars <- variableList(token = token)
+ connectToPHISWS(apiID="ws_private", 
+     url = "www.opensilex.org/openSilexAPI/rest/", 
+     "guest@opensilex.org",
+     "guest")
+ vars <- variableList()
  vars
- plotVar(vars$value[1], token = token)
+ plotVar(vars$value[1])
 }
 
 }

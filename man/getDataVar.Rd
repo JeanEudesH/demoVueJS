@@ -4,14 +4,12 @@
 \alias{getDataVar}
 \title{Get Data from WS2 and formate them}
 \usage{
-getDataVar(varURI, variableList, token)
+getDataVar(varURI, variableList)
 }
 \arguments{
 \item{varURI}{uri of the variable to plot, from the \code{\link{variableList}} function or the web service directly}
 
 \item{variableList}{from \code{\link{variableList}}}
-
-\item{token}{a token from \code{\link{getToken}} function}
 }
 \value{
 WSResponse
@@ -21,13 +19,9 @@ Get Data from WS2 and formate them
 }
 \examples{
 \donttest{
-initializeClientConnection(apiID="ws_private", url = "www.opensilex.org/openSilexAPI/rest/")
- aToken <- getToken("guest@opensilex.org","guest")
- token <- aToken$data
- varPrettyTot <- variableList(token = token)
- getDataVar(varURI = listVariables(token,
-                  wsUrl="www.opensilex.org/openSilexAPI/rest/")$value[1],
-                  variableList = varPrettyTot,
-                  token = token)
+connectToPHISWS(apiID="ws_private", url = "www.opensilex.org/openSilexAPI/rest/", "guest@opensilex.org","guest")
+ varPrettyTot <- variableList()
+ getDataVar(varURI = listVariables(wsrl="www.opensilex.org/openSilexAPI/rest/")$value[1],
+                  variableList = varPrettyTot)
 }
 }

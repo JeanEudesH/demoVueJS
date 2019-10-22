@@ -1,11 +1,10 @@
 // comment out this line from development 
-//ocpu.seturl("http://0.0.0.0:8004/ocpu/library/compareVariableDemo/R");
+ocpu.seturl("http://0.0.0.0:8004/ocpu/library/compareVariableDemo/R");
 
 var App = new Vue({
   el: "#DemoApp",
   data: {
     wsParams: {
-        token: "",
         wsUrl: "",
         params: new window.URLSearchParams(window.location.search)
     },
@@ -25,11 +24,6 @@ var App = new Vue({
   },
   methods: {
     initialize: function (){
-        if ($("#token").length != 0) {
-          this.wsParams.token = $("#token").val();
-        } else {
-          this.wsParams.token = this.wsParams.params.get("accessToken");
-        }
         if ($("#wsUrl").length != 0) {
           this.wsParams.wsUrl = $("#wsUrl").val();
         } else {
@@ -38,7 +32,6 @@ var App = new Vue({
     },
     fillListInput: function(inputId, inputList){
         selectParameters = [
-            this.wsParams.token,
             this.wsParams.wsUrl
         ]
         inputList.forEach(function(inputItem) {
@@ -68,7 +61,6 @@ var App = new Vue({
           this.listParameters.RfunctionName,
           // list of arguments names and value
           {
-              token: this.wsParams.token,
               wsUrl: this.wsParams.wsUrl
           },
       
@@ -79,16 +71,11 @@ var App = new Vue({
           }
         ).fail(function(request) {
           $("#cssLoader").removeClass("is-active");
-          alert("Error: Token or wsURL not valid");
+          alert("Error: wsURL not valid");
         });
     },
     loadVariables: function (inputId ){
         this.initialize();
-        // test token send in url
-        if (this.wsParams.token == null || this.wsParams.token == "") {
-          alert("An accessToken is required");
-        return false;
-        } 
         if (this.wsParams.wsUrl == null || this.wsParams.wsUrl == "") {
           alert("A wsUrl is required");
         return false;
@@ -104,7 +91,6 @@ var App = new Vue({
         return(req = ocpu.call(
             this.graphParameters.functionName,
             {
-                token: this.wsParams.token,
                 wsUrl: this.wsParams.wsUrl,
                 varURI: varURIs
             },
